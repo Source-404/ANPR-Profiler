@@ -1,0 +1,57 @@
+<html>
+    <style>
+        img{
+            max-height: 50vh;
+        }
+    </style>
+<head>
+<title>Profile</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />        
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+</head>
+<body>
+<p><h1 align="center">Uplaod the image of car to get profile</h1></p>
+<div class="container">
+<div class="row">
+    <h2>Select a file to upload</h2>
+    <p>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </p>
+    {% if filename %}
+        <div>
+            <img src="{{ url_for('display_image', filename=filename) }}">
+        </div>
+    {% endif %}
+    <form method="post" action="/upload" enctype="multipart/form-data">
+        <dl>
+            <p>
+                <input type="file" name="file" class="form-control" autocomplete="off" required>
+            </p>
+        </dl>
+        <p>
+            <input type="submit" value="Submit" class="btn btn-info">
+        </p>
+    </form>
+    {% if text %}
+        <div>
+            <h1>{{text}}</h1>
+            {% if data %}
+            <h3>Name: {{data[0]}}</h3>
+            <h3>Age: {{data[1]}}</h3>
+            <h3>Vehicle: {{data[2]}}</h3>
+            {% else %}
+            <h3> Could not fetch User</h3>
+            {% endif %}
+    {% endif %}
+</div>
+</div>
+</body>
+</html>
